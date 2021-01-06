@@ -7,6 +7,7 @@ const SEARCH_URL = 'https://api.themoviedb.org/3/search?api_key=887087e9e6cf3d40
 
 const table = []
 const header = document.querySelector('header')
+const toTheTop = document.querySelector('.to-the-top')
 
 getMovies(API_URL)
 
@@ -14,7 +15,6 @@ async function getMovies(url) {
   const res = await fetch(url)
   const data = await res.json()
   const result = data.results
-  console.log(result)
   display(result)
 }
 
@@ -48,7 +48,20 @@ function changeRatingColor(rate) {
   else return 'green'
 }
 
+toTheTop.addEventListener('click', () => {
+  document.body.scrollTop = 0
+  document.documentElement.scrollTop = 0
+})
+
+function topFunction() {}
+
 window.onscroll = e => {
+  if (this.scrollY == 0) {
+    toTheTop.classList.remove('show')
+  } else {
+    toTheTop.classList.add('show')
+  }
+
   if (this.oldScroll > this.scrollY) header.classList.add('hide')
   else header.classList.remove('hide')
   this.oldScroll = this.scrollY
