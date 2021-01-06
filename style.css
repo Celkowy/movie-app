@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --main-color: #373b69;
+  --second-color: #22254b;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--second-color);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--main-color);
+  transition: top 0.3s ease;
+}
+
+header.hide {
+  top: -90px;
+}
+
+.fa-video {
+  font-size: 2.5rem;
+  margin-left: 50px;
+  cursor: pointer;
+  color: white;
+  transform: rotate(0);
+  transition: transform 0.4s ease;
+}
+
+.fa-video:hover {
+  transform: rotate(-30deg);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#form {
+  padding: 1rem;
+}
+
+#search {
+  background-color: transparent;
+  border: 2px solid #22254b;
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 50px;
+  color: white;
+  font-family: inherit;
+}
+
+#search::placeholder {
+  color: #7378c5;
+}
+
+#search:focus {
+  outline: none;
+}
+
+.movie {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+  overflow: hidden;
+  background-color: var(--main-color);
+  margin: 1rem;
+  border-radius: 5px;
+}
+
+.movie-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-top: none;
+  height: 15%;
+}
+
+.overview {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(101%);
+  background-color: white;
+  padding: 1rem;
+  letter-spacing: 0.5px;
+  transition: transform 0.4s ease-in;
+}
+
+.movie:hover .overview {
+  transform: translateY(0);
+}
+
+.rating.red {
+  color: red;
+}
+
+.rating.orange {
+  color: orange;
+}
+
+.rating.green {
+  color: green;
+}
+
+.overview-text {
+  display: inline-block;
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--second-color);
+  margin-bottom: 0.5rem;
+}
+
+img {
+  width: 100%;
+  min-height: 85%;
+}
+
+h2.title {
+  font-size: 1.1rem;
+  color: white;
+  margin-right: 0.5rem;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--second-color);
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  color: orange;
+  border-radius: 5px;
+}
