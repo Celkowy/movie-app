@@ -5,51 +5,93 @@ const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 
 const SEARCH_URL = 'https://api.themoviedb.org/3/search?api_key=887087e9e6cf3d40f8aead484e46c8b9&query="'
 
-const table = []
 const header = document.querySelector('header')
 const toTheTop = document.querySelector('.to-the-top')
 let i = 1
 const pagination = document.querySelector('.pagination-div-second')
 const wrapper = document.querySelector('.wrapper')
-// window.addEventListener('scroll', e => {
-//   console.log(((document.documentElement.scrollHeight - document.documentElement.clientHeight) / 5) * 4)
+const paginationPrev = document.querySelector('.pagination-div-prev')
+const pagiantionDivPrevPointerEvents = document.querySelector('.pagiantion-div-prev-pointer-events')
+const pagiantionDivNextPointerEvents = document.querySelector('.pagiantion-div-next-pointer-events')
+const paginationNext = document.querySelector('.pagination-div-next')
+const pageNumber = document.querySelector('.page-number')
 
-//   console.log(window.scrollY)
-// })
+let currentActivePage = 1
+let paginationMaxValue = 10
+let paginationMinValue = 1
+
+pageNumber.textContent = currentActivePage
+
+paginationNext.addEventListener('click', () => {
+  currentActivePage++
+  i++
+  if (currentActivePage >= paginationMaxValue) currentActivePage = paginationMaxValue
+  pageNumber.innerHTML = currentActivePage
+  wrapper.innerHTML = ''
+  updateCurrentActivePage()
+  console.log(i)
+})
+
+paginationPrev.addEventListener('click', () => {
+  currentActivePage--
+  i -= 5
+  if (currentActivePage == 0) currentActivePage = paginationMinValue
+  pageNumber.innerHTML = currentActivePage
+  wrapper.innerHTML = ''
+  updateCurrentActivePage()
+  console.log(i)
+})
+
+function updateCurrentActivePage() {
+  if (currentActivePage == paginationMinValue) {
+    paginationPrev.classList.add('disabled')
+    pagiantionDivPrevPointerEvents.style.pointerEvents = 'none'
+  } else {
+    paginationPrev.classList.remove('disabled')
+    pagiantionDivPrevPointerEvents.style.pointerEvents = 'auto'
+  }
+
+  if (currentActivePage == paginationMaxValue) {
+    paginationNext.classList.add('disabled')
+    pagiantionDivNextPointerEvents.style.pointerEvents = 'none'
+  } else {
+    paginationNext.classList.remove('disabled')
+    pagiantionDivNextPointerEvents.style.pointerEvents = 'auto'
+  }
+}
 
 window.addEventListener('scroll', e => {
-  if (i < 5) {
+  console.log(i)
+  if (i % 5 != 0) {
     if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100)
       getMovies(API_URL + ++i)
   }
 })
-
-pagination.addEventListener('click', () => {})
 
 getMovies(API_URL)
 
 async function getMovies(url) {
   const res = await fetch(url)
   const data = await res.json()
-  const result = data.results
-  appendToDom(result)
+  const movies = data.results
+  appendToDOM(movies)
 }
 
-function appendToDom(result) {
-  result.forEach(element => {
+function appendToDOM(movies) {
+  movies.forEach(movie => {
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
     div.innerHTML = `
-    <img src="${IMG_PATH + element.poster_path}" alt="oops something went wrong" />
+    <img src="${IMG_PATH + movie.poster_path}" alt=" oops something went wrong :(" />
     <div class="movie-info">
-      <h2 class="title">${element.title}</h2>
-      <h3 class="rating ${changeRatingColor(element.vote_average)}">${element.vote_average}</h3>
+      <h2 class="title">${movie.title}</h2>
+      <h3 class="rating ${changeRatingColor(movie.vote_average)}">${movie.vote_average}</h3>
     </div>
     <div class="overview active">
       <div>
         <h3 class="overview-text">Overview</h3>
       </div>
-      ${element.overview}
+      ${movie.overview}
     </div>
     `
     wrapper.appendChild(div)

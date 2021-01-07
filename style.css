@@ -4,6 +4,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -193,7 +194,7 @@ h2.title {
 }
 
 .to-the-top:hover .arrow-up {
-  animation: to-the-top-animation 0.3s;
+  animation: to-the-top-animation 0.3s ease;
 }
 
 @keyframes to-the-top-animation {
@@ -223,8 +224,8 @@ h2.title {
   color: white;
 }
 
-.pagination-div-first,
-.pagination-div-second {
+.pagination-div-prev,
+.pagination-div-next {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -233,6 +234,21 @@ h2.title {
   background-color: var(--main-color);
   cursor: pointer;
   margin: 5px;
+  transition: opacity 0.2s ease;
+}
+
+.pagination-div-prev-pointer-events {
+  pointer-events: none;
+}
+
+.pagination-div-prev:hover,
+.pagination-div-next:hover {
+  opacity: 0.5;
+}
+
+.pagination-div-prev.disabled,
+.pagination-div-next.disabled {
+  opacity: 0.2;
 }
 
 .page-number {
