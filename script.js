@@ -28,6 +28,7 @@ paginationNext.addEventListener('click', () => {
   if (currentActivePage >= paginationMaxValue) currentActivePage = paginationMaxValue
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
+  scrollToTheTop()
   updateCurrentActivePage()
   console.log(i)
 })
@@ -38,6 +39,7 @@ paginationPrev.addEventListener('click', () => {
   if (currentActivePage == 0) currentActivePage = paginationMinValue
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
+  scrollToTheTop()
   updateCurrentActivePage()
   console.log(i)
 })
@@ -62,13 +64,14 @@ function updateCurrentActivePage() {
 
 window.addEventListener('scroll', e => {
   console.log(i)
-  if (i % 5 != 0) {
+  if (i < 5) {
     if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100)
       getMovies(API_URL + ++i)
   }
 })
 
 getMovies(API_URL)
+getMovies(API_URL + 2)
 
 async function getMovies(url) {
   const res = await fetch(url)
@@ -105,9 +108,13 @@ function changeRatingColor(rate) {
 }
 
 toTheTop.addEventListener('click', () => {
+  scrollToTheTop()
+})
+
+function scrollToTheTop() {
   document.body.scrollTop = 0
   document.documentElement.scrollTop = 0
-})
+}
 
 window.onscroll = e => {
   if (this.oldScroll < this.scrollY) header.classList.add('hide')
