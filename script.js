@@ -10,14 +10,18 @@ const header = document.querySelector('header')
 const toTheTop = document.querySelector('.to-the-top')
 let i = 1
 const pagination = document.querySelector('.pagination-div-second')
-
+const wrapper = document.querySelector('.wrapper')
 // window.addEventListener('scroll', e => {
+//   console.log(((document.documentElement.scrollHeight - document.documentElement.clientHeight) / 5) * 4)
+
 //   console.log(window.scrollY)
-//   console.log((document.documentElement.scrollHeight / 3) * 2)
 // })
 
 window.addEventListener('scroll', e => {
-  if (window.scrollY >= document.documentElement.scrollHeight - 1300) getMovies(API_URL + ++i)
+  if (i < 5) {
+    if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100)
+      getMovies(API_URL + ++i)
+  }
 })
 
 pagination.addEventListener('click', () => {})
@@ -32,7 +36,6 @@ async function getMovies(url) {
 }
 
 function appendToDom(result) {
-  const wrapper = document.querySelector('.wrapper')
   result.forEach(element => {
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
@@ -49,7 +52,6 @@ function appendToDom(result) {
       ${element.overview}
     </div>
     `
-    // div.innerHTML = element.title
     wrapper.appendChild(div)
   })
 }
@@ -64,8 +66,6 @@ toTheTop.addEventListener('click', () => {
   document.body.scrollTop = 0
   document.documentElement.scrollTop = 0
 })
-
-function topFunction() {}
 
 window.onscroll = e => {
   if (this.oldScroll < this.scrollY) header.classList.add('hide')
