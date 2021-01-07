@@ -15,21 +15,45 @@
   <body>
     <header>
       <i class="fas fa-video"></i>
-      <form id="form">
-        <input type="text" id="search" placeholder="Search" />
+      <form id="form" autocomplete="off">
+        <div class="input-wrap">
+          <input type="text" id="search" placeholder="Search" />
+          <i class="fas fa-search"></i>
+        </div>
       </form>
     </header>
-    <div class="wrapper">
-      <!-- <div class="movie">
-        <img src="./wwwww.jpg" alt="" />
-        <div class="movie-info">
-          <h2 class="title">dsadsa</h2>
-          <span class="rating">8</span>
-        </div>
-        <div class="overview active"></div>
+    <div class="wrapper"></div>
+    <div class="to-the-top">
+      <svg
+        class="arrow-up"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="white"
+        width="48px"
+        height="48px"
+      >
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+      </svg>
+    </div>
+
+    <div class="pagination">
+      <div class="pagination-div-first">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="48px" height="48px">
+          <path d="M0 0h24v24H0V0z" fill="none" />
+          <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+        </svg>
       </div>
-    </div> -->
-    <div class="to-the-top"><i class="fas fa-arrow-up"></i></div>
+
+      <span class="page-number">1</span>
+
+      <div class="pagination-div-second">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="48px" height="48px">
+          <path d="M0 0h24v24H0V0z" fill="none" />
+          <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+        </svg>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

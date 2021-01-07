@@ -15,16 +15,16 @@ async function getMovies(url) {
   const res = await fetch(url)
   const data = await res.json()
   const result = data.results
-  display(result)
+  appendToDom(result)
 }
 
-function display(result) {
+function appendToDom(result) {
   const wrapper = document.querySelector('.wrapper')
   result.forEach(element => {
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
     div.innerHTML = `
-    <img src="${IMG_PATH + element.poster_path}" alt="" />
+    <img src="${IMG_PATH + element.poster_path}" alt="oops something went wrong" />
         <div class="movie-info">
           <h2 class="title">${element.title}</h2>
           <h3 class="rating ${changeRatingColor(element.vote_average)}">${element.vote_average}</h3>
@@ -56,13 +56,13 @@ toTheTop.addEventListener('click', () => {
 function topFunction() {}
 
 window.onscroll = e => {
+  if (this.oldScroll < this.scrollY) header.classList.add('hide')
+  else header.classList.remove('hide')
+  this.oldScroll = this.scrollY
+
   if (this.scrollY == 0) {
     toTheTop.classList.remove('show')
   } else {
     toTheTop.classList.add('show')
   }
-
-  if (this.oldScroll > this.scrollY) header.classList.add('hide')
-  else header.classList.remove('hide')
-  this.oldScroll = this.scrollY
 }

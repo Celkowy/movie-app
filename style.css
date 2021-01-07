@@ -47,21 +47,23 @@ header.hide {
 }
 
 .wrapper {
+  position: relative;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 #form {
+  display: flex;
   padding: 1rem;
 }
 
 #search {
   background-color: transparent;
-  border: 2px solid #22254b;
+  border: none;
   font-size: 1rem;
   padding: 0.8rem 1rem;
-  border-radius: 50px;
+
   color: white;
   font-family: inherit;
 }
@@ -72,6 +74,24 @@ header.hide {
 
 #search:focus {
   outline: none;
+}
+
+.input-wrap {
+  border-radius: 50px;
+  border: 2px solid #22254b;
+}
+
+.fa-search {
+  margin-right: 15px;
+  font-size: 1.3rem;
+  color: white;
+  opacity: 0.3;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.fa-search:hover {
+  opacity: 1;
 }
 
 .movie {
@@ -162,14 +182,11 @@ h2.title {
   align-items: center;
   bottom: 5%;
   right: 2.5%;
-  width: 50px;
-  height: 50px;
   color: white;
   border-radius: 5px;
   background-color: var(--main-color);
   font-size: 2.5rem;
   cursor: pointer;
-  transition: display 5s ease-in;
   overflow: hidden;
 }
 
@@ -177,7 +194,7 @@ h2.title {
   display: flex;
 }
 
-.to-the-top:hover .fa-arrow-up {
+.to-the-top:hover .arrow-up {
   animation: to-the-top-animation 0.3s;
 }
 
@@ -197,4 +214,29 @@ h2.title {
   100% {
     transform: translateY(0);
   }
+}
+
+.pagination {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: white;
+}
+
+.pagination-div-first,
+.pagination-div-second {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 5px;
+  background-color: var(--main-color);
+  cursor: pointer;
+  margin: 5px;
+}
+
+.page-number {
+  margin: 0 25px;
 }
