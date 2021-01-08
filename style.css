@@ -237,10 +237,6 @@ h2.title {
   transition: opacity 0.2s ease;
 }
 
-.pagination-div-prev-pointer-events {
-  pointer-events: none;
-}
-
 .pagination-div-prev:hover,
 .pagination-div-next:hover {
   opacity: 0.5;
@@ -248,7 +244,8 @@ h2.title {
 
 .pagination-div-prev.disabled,
 .pagination-div-next.disabled {
-  opacity: 0.2;
+  display: none;
+  box-shadow: 0 0 2px 5px green;
 }
 
 .page-number {

@@ -11,8 +11,6 @@ let i = 1
 const pagination = document.querySelector('.pagination-div-second')
 const wrapper = document.querySelector('.wrapper')
 const paginationPrev = document.querySelector('.pagination-div-prev')
-const pagiantionDivPrevPointerEvents = document.querySelector('.pagiantion-div-prev-pointer-events')
-const pagiantionDivNextPointerEvents = document.querySelector('.pagiantion-div-next-pointer-events')
 const paginationNext = document.querySelector('.pagination-div-next')
 const pageNumber = document.querySelector('.page-number')
 
@@ -24,22 +22,19 @@ pageNumber.textContent = currentActivePage
 
 paginationNext.addEventListener('click', () => {
   currentActivePage++
-  i++
   if (currentActivePage >= paginationMaxValue) currentActivePage = paginationMaxValue
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
-  scrollToTheTop()
   updateCurrentActivePage()
   console.log(i)
 })
 
 paginationPrev.addEventListener('click', () => {
   currentActivePage--
-  i -= 5
   if (currentActivePage == 0) currentActivePage = paginationMinValue
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
-  scrollToTheTop()
+  i -= 8
   updateCurrentActivePage()
   console.log(i)
 })
@@ -47,31 +42,26 @@ paginationPrev.addEventListener('click', () => {
 function updateCurrentActivePage() {
   if (currentActivePage == paginationMinValue) {
     paginationPrev.classList.add('disabled')
-    pagiantionDivPrevPointerEvents.style.pointerEvents = 'none'
   } else {
     paginationPrev.classList.remove('disabled')
-    pagiantionDivPrevPointerEvents.style.pointerEvents = 'auto'
   }
 
   if (currentActivePage == paginationMaxValue) {
     paginationNext.classList.add('disabled')
-    pagiantionDivNextPointerEvents.style.pointerEvents = 'none'
   } else {
     paginationNext.classList.remove('disabled')
-    pagiantionDivNextPointerEvents.style.pointerEvents = 'auto'
   }
 }
 
 window.addEventListener('scroll', e => {
   console.log(i)
-  if (i < 5) {
+  if (i < 4 * currentActivePage) {
     if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100)
       getMovies(API_URL + ++i)
   }
 })
 
 getMovies(API_URL)
-getMovies(API_URL + 2)
 
 async function getMovies(url) {
   const res = await fetch(url)
@@ -108,13 +98,9 @@ function changeRatingColor(rate) {
 }
 
 toTheTop.addEventListener('click', () => {
-  scrollToTheTop()
-})
-
-function scrollToTheTop() {
   document.body.scrollTop = 0
   document.documentElement.scrollTop = 0
-}
+})
 
 window.onscroll = e => {
   if (this.oldScroll < this.scrollY) header.classList.add('hide')
