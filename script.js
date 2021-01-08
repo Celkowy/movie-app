@@ -3,11 +3,18 @@ const API_URL =
 
 const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 
-const SEARCH_URL = 'https://api.themoviedb.org/3/search?api_key=887087e9e6cf3d40f8aead484e46c8b9&query="'
+const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="'
 
 const header = document.querySelector('header')
+const videoIcon = document.querySelector('.fa-video')
+const form = document.getElementById('form')
+let search = document.getElementById('search')
+const faSearch = document.querySelector('.fa-search')
+const faDelete = document.querySelector('.fa-times')
+
 const toTheTop = document.querySelector('.to-the-top')
 let i = 1
+let switcher = 0
 const pagination = document.querySelector('.pagination-div-second')
 const wrapper = document.querySelector('.wrapper')
 const paginationPrev = document.querySelector('.pagination-div-prev')
@@ -42,15 +49,15 @@ paginationPrev.addEventListener('click', () => {
 
 function updateCurrentActivePage() {
   if (currentActivePage == paginationMinValue) {
-    paginationPrev.classList.add('disabled')
+    paginationPrev.classList.add('hide')
   } else {
-    paginationPrev.classList.remove('disabled')
+    paginationPrev.classList.remove('hide')
   }
 
   if (currentActivePage == paginationMaxValue) {
-    paginationNext.classList.add('disabled')
+    paginationNext.classList.add('hide')
   } else {
-    paginationNext.classList.remove('disabled')
+    paginationNext.classList.remove('hide')
   }
 }
 
@@ -64,7 +71,7 @@ async function upload40Movies() {
 
 window.addEventListener('scroll', async e => {
   const threshold = Math.max(document.documentElement.scrollHeight - document.documentElement.clientHeight - 100, 0)
-  if (i <= 5 * currentActivePage) {
+  if (switcher == 0 && i <= 5 * currentActivePage) {
     if (window.scrollY > threshold) {
       const movies = await getMovies(API_URL + i++)
       appendToDOM(movies)
@@ -81,19 +88,21 @@ async function getMovies(url) {
 
 function appendToDOM(movies) {
   movies.forEach((movie, index) => {
+    const { title, poster_path, vote_average, overview } = movie
+
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
     div.innerHTML = `
-    <img src="${movie.poster_path ? IMG_PATH + movie.poster_path : './img/jazz.jpg'}"/>
+    <img src="${poster_path ? IMG_PATH + poster_path : './img/jazz.jpg'}"/>
     <div class="movie-info">
-      <h2 class="title">${movie.title}</h2>
-      <h3 class="rating ${changeRatingColor(movie.vote_average)}">${movie.vote_average}</h3>
+      <h2 class="title">${title}</h2>
+      <h3 class="rating ${changeRatingColor(vote_average)}">${vote_average}</h3>
     </div>
     <div class="overview active">
       <div>
         <h3 class="overview-text">Overview</h3>
       </div>
-      ${movie.overview}
+      ${overview}
     </div>
     `
     wrapper.appendChild(div)
@@ -110,9 +119,13 @@ function changeRatingColor(rate) {
   else return 'green'
 }
 
-toTheTop.addEventListener('click', () => {
+function scrollToTheTop() {
   document.body.scrollTop = 0
   document.documentElement.scrollTop = 0
+}
+
+toTheTop.addEventListener('click', () => {
+  scrollToTheTop()
 })
 
 window.onscroll = e => {
@@ -126,3 +139,69 @@ window.onscroll = e => {
     toTheTop.classList.add('show')
   }
 }
+
+async function searchedMovies(url) {
+  wrapper.innerHTML = ''
+  const res = await fetch(url)
+  const data = await res.json()
+  const movies = data.results
+  appendToDOM(movies)
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault()
+
+  const searchText = search.value
+
+  if (searchText && searchText !== '') {
+    switcher = 1
+    paginationPrev.classList.add('hide')
+    paginationNext.classList.add('hide')
+    pageNumber.classList.add('hide')
+    searchedMovies(SEARCH_URL + searchText)
+    searchText.value = ''
+  } else {
+    location.reload()
+  }
+})
+
+form.addEventListener('input', () => {
+  let searchText = search.value
+
+  if (searchText === '') {
+    faDelete.classList.remove('show')
+  } else {
+    faDelete.classList.add('show')
+  }
+})
+
+faDelete.addEventListener('click', () => {
+  search.value = ''
+  faDelete.classList.remove('show')
+})
+
+faSearch.addEventListener('click', e => {
+  const searchText = search.value
+
+  if (searchText && searchText !== '') {
+    switcher = 1
+    paginationPrev.classList.add('hide')
+    paginationNext.classList.add('hide')
+    pageNumber.classList.add('hide')
+    searchedMovies(SEARCH_URL + searchText)
+    searchText.value = ''
+  } else {
+    location.reload()
+  }
+})
+
+videoIcon.addEventListener('click', () => {
+  if (i < 7) {
+    scrollToTheTop()
+  } else {
+    scrollToTheTop()
+    setTimeout(() => {
+      location.reload()
+    }, 850)
+  }
+})

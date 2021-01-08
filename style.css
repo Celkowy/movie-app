@@ -63,7 +63,7 @@ header.hide {
   background-color: transparent;
   border: none;
   font-size: 1rem;
-  padding: 0.8rem 1rem;
+  padding: 0.8rem 15px 0.8rem 1rem;
   color: white;
   font-family: inherit;
 }
@@ -83,6 +83,7 @@ header.hide {
 
 .fa-search {
   margin-right: 15px;
+  line-height: 55px;
   font-size: 1.3rem;
   color: white;
   opacity: 0.3;
@@ -92,6 +93,23 @@ header.hide {
 
 .fa-search:hover {
   opacity: 1;
+}
+
+.fa-times {
+  display: none;
+  margin-right: 15px;
+  font-size: 1.3rem;
+  color: white;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.fa-times:hover {
+  opacity: 1;
+}
+
+.fa-times.show {
+  display: inline;
 }
 
 .movie {
@@ -248,14 +266,18 @@ h2.title {
   opacity: 0.5;
 }
 
-.pagination-div-prev.disabled,
-.pagination-div-next.disabled {
+.pagination-div-prev.hide,
+.pagination-div-next.hide {
   display: none;
   box-shadow: 0 0 2px 5px green;
 }
 
 .page-number {
   margin: 0 25px;
+}
+
+.page-number.hide {
+  display: none;
 }
 
 @media (max-width: 1024px) {
