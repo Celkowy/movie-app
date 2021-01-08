@@ -104,6 +104,12 @@ header.hide {
   background-color: var(--main-color);
   margin: 1rem;
   border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+
+.movie.animation {
+  opacity: 1;
 }
 
 .movie-info {

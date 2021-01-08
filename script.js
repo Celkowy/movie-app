@@ -51,14 +51,18 @@ function updateCurrentActivePage() {
   }
 }
 
-getMovies(API_URL)
-getMovies(API_URL + i)
-i = 1
+;(async () => {
+  const m1 = await getMovies(API_URL + i)
+  const m2 = await getMovies(API_URL + ++i)
+  appendToDOM([...m1, ...m2])
+})()
 
-window.addEventListener('scroll', e => {
+window.addEventListener('scroll', async e => {
   if (i < 5 * currentActivePage) {
-    if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100)
-      getMovies(API_URL + ++i)
+    if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100) {
+      const movies = await getMovies(API_URL + ++i)
+      appendToDOM(movies)
+    }
   }
 })
 
@@ -66,15 +70,15 @@ async function getMovies(url) {
   const res = await fetch(url)
   const data = await res.json()
   const movies = data.results
-  appendToDOM(movies)
+  return movies
 }
 
 function appendToDOM(movies) {
-  movies.forEach(movie => {
+  movies.forEach((movie, index) => {
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
     div.innerHTML = `
-    <img src="${IMG_PATH + movie.poster_path}" alt=" oops something went wrong :(" />
+    <img src="${movie.poster_path ? IMG_PATH + movie.poster_path : './img/jazz.jpg'}"/>
     <div class="movie-info">
       <h2 class="title">${movie.title}</h2>
       <h3 class="rating ${changeRatingColor(movie.vote_average)}">${movie.vote_average}</h3>
@@ -87,6 +91,10 @@ function appendToDOM(movies) {
     </div>
     `
     wrapper.appendChild(div)
+
+    setTimeout(() => {
+      div.classList.add('animation')
+    }, index * 100)
   })
 }
 
