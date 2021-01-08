@@ -26,6 +26,7 @@ paginationNext.addEventListener('click', () => {
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
   updateCurrentActivePage()
+  upload40Movies()
 })
 
 paginationPrev.addEventListener('click', () => {
@@ -34,7 +35,9 @@ paginationPrev.addEventListener('click', () => {
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
   i -= 10
+  if (i <= 0) i = 1
   updateCurrentActivePage()
+  upload40Movies()
 })
 
 function updateCurrentActivePage() {
@@ -51,16 +54,19 @@ function updateCurrentActivePage() {
   }
 }
 
-;(async () => {
-  const m1 = await getMovies(API_URL + i)
-  const m2 = await getMovies(API_URL + ++i)
+upload40Movies()
+
+async function upload40Movies() {
+  const m1 = await getMovies(API_URL + i++)
+  const m2 = await getMovies(API_URL + i++)
   appendToDOM([...m1, ...m2])
-})()
+}
 
 window.addEventListener('scroll', async e => {
-  if (i < 5 * currentActivePage) {
-    if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100) {
-      const movies = await getMovies(API_URL + ++i)
+  const threshold = Math.max(document.documentElement.scrollHeight - document.documentElement.clientHeight - 100, 0)
+  if (i <= 5 * currentActivePage) {
+    if (window.scrollY > threshold) {
+      const movies = await getMovies(API_URL + i++)
       appendToDOM(movies)
     }
   }
