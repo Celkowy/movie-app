@@ -26,7 +26,6 @@ paginationNext.addEventListener('click', () => {
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
   updateCurrentActivePage()
-  console.log(i)
 })
 
 paginationPrev.addEventListener('click', () => {
@@ -34,9 +33,8 @@ paginationPrev.addEventListener('click', () => {
   if (currentActivePage == 0) currentActivePage = paginationMinValue
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
-  i -= 8
+  i -= 10
   updateCurrentActivePage()
-  console.log(i)
 })
 
 function updateCurrentActivePage() {
@@ -53,15 +51,16 @@ function updateCurrentActivePage() {
   }
 }
 
+getMovies(API_URL)
+getMovies(API_URL + i)
+i = 1
+
 window.addEventListener('scroll', e => {
-  console.log(i)
-  if (i < 4 * currentActivePage) {
+  if (i < 5 * currentActivePage) {
     if (window.scrollY >= document.documentElement.scrollHeight - document.documentElement.clientHeight - 100)
       getMovies(API_URL + ++i)
   }
 })
-
-getMovies(API_URL)
 
 async function getMovies(url) {
   const res = await fetch(url)
