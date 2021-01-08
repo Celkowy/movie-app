@@ -29,7 +29,7 @@ pageNumber.textContent = currentActivePage
 
 paginationNext.addEventListener('click', () => {
   currentActivePage++
-  if (currentActivePage >= paginationMaxValue) currentActivePage = paginationMaxValue
+  if (currentActivePage == paginationMaxValue) currentActivePage = paginationMaxValue
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
   updateCurrentActivePage()
@@ -161,7 +161,9 @@ form.addEventListener('submit', e => {
     searchedMovies(SEARCH_URL + searchText)
     searchText.value = ''
   } else {
-    location.reload()
+    wrapper.innerHTML = ''
+    i = 1
+    upload40Movies()
   }
 })
 
@@ -178,6 +180,9 @@ form.addEventListener('input', () => {
 faDelete.addEventListener('click', () => {
   search.value = ''
   faDelete.classList.remove('show')
+  scrollToTheTop()
+  search.focus()
+  i = 1
 })
 
 faSearch.addEventListener('click', e => {
@@ -191,17 +196,21 @@ faSearch.addEventListener('click', e => {
     searchedMovies(SEARCH_URL + searchText)
     searchText.value = ''
   } else {
-    location.reload()
+    refreshScreen()
   }
 })
 
 videoIcon.addEventListener('click', () => {
-  if (i < 7) {
-    scrollToTheTop()
-  } else {
-    scrollToTheTop()
-    setTimeout(() => {
-      location.reload()
-    }, 850)
-  }
+  search.value = ''
+  faDelete.classList.remove('show')
+  refreshScreen()
 })
+
+function refreshScreen() {
+  paginationPrev.classList.remove('hide')
+  paginationNext.classList.remove('hide')
+  wrapper.innerHTML = ''
+  i = 1
+  location.reload()
+  upload40Movies()
+}
