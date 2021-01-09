@@ -121,7 +121,7 @@ header.hide {
   opacity: 1;
 }
 
-.fa-times {
+.cross {
   display: none;
   margin-right: 15px;
   font-size: 1.3rem;
@@ -131,11 +131,11 @@ header.hide {
   transition: opacity 0.3s ease;
 }
 
-.fa-times:hover {
+.cross:hover {
   opacity: 1;
 }
 
-.fa-times.show {
+.cross.show {
   display: inline;
 }
 
@@ -166,6 +166,71 @@ header.hide {
   height: 15%;
 }
 
+.flex-me {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details {
+  font-weight: bold;
+  border: none;
+  color: red;
+  border-bottom: 2px solid red;
+  cursor: pointer;
+  animation: details-animation 3s linear infinite;
+}
+
+@keyframes details-animation {
+  0% {
+    transform: translateX(0);
+  }
+
+  90% {
+    transform: translateX(0);
+  }
+
+  91% {
+    transform: translateX(5px);
+  }
+
+  92% {
+    transform: translateX(-5px);
+  }
+
+  93% {
+    transform: translateX(5px);
+  }
+
+  94% {
+    transform: translateX(-5px);
+  }
+
+  95% {
+    transform: translateX(5px);
+  }
+
+  96% {
+    transform: translateX(-5px);
+  }
+
+  97% {
+    transform: translateX(5px);
+  }
+
+  98% {
+    transform: translateX(-5px);
+  }
+
+  99% {
+    transform: translateX(5px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .overview {
   display: flex;
   flex-direction: column;
@@ -181,6 +246,47 @@ header.hide {
 
 .movie:hover .overview {
   transform: translateY(0);
+}
+
+.pop-up {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  display: none;
+  background-color: red;
+  transition: opacity 0.3 ease;
+  z-index: 3;
+}
+
+.delete {
+  position: absolute;
+  top: -3rem;
+  right: -3rem;
+  font-size: 3rem;
+  opacity: 0.3;
+  color: white;
+}
+
+.pop-up.show {
+  display: block;
+}
+
+.do-not-click {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  display: none;
+}
+
+.do-not-click.active {
+  display: block;
 }
 
 .rating.red {
@@ -311,7 +417,7 @@ h2.title {
   display: none;
 }
 
-.fa-times:active {
+.cross:active {
   transform: scale(0.89);
 }
 
@@ -352,7 +458,7 @@ h2.title {
     transform: scale(1);
   }
 
-  .fa-times:active {
+  .cross:active {
     transform: scale(1);
   }
 

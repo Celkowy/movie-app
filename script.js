@@ -16,7 +16,7 @@ const videoIcon = document.querySelector('.fa-video')
 const form = document.getElementById('form')
 const wrapper = document.querySelector('.wrapper')
 const faSearch = document.querySelector('.fa-search')
-const faDelete = document.querySelector('.fa-times')
+const faDelete = document.querySelector('.cross')
 const faStart = document.querySelector('.fa-star')
 const theater = document.querySelector('.fa-theater-masks')
 const toTheTop = document.querySelector('.to-the-top')
@@ -105,12 +105,19 @@ function appendToDOM(movies) {
       <h3 class="rating ${changeRatingColor(vote_average)}">${vote_average}</h3>
     </div>
     <div class="overview active">
-      <div>
+      <div class="flex-me">
         <h3 class="overview-text">Overview</h3>
+        <div class="details">More</div>
       </div>
       ${overview}
     </div>
     `
+    const details = div.querySelector('.details')
+    const popUp = document.querySelector('.pop-up')
+    details.addEventListener('click', () => {
+      popUp.classList.add('show')
+    })
+
     wrapper.appendChild(div)
 
     setTimeout(() => {
