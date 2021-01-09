@@ -11,16 +11,14 @@ const form = document.getElementById('form')
 let search = document.getElementById('search')
 const faSearch = document.querySelector('.fa-search')
 const faDelete = document.querySelector('.fa-times')
-
 const toTheTop = document.querySelector('.to-the-top')
-let i = 1
-let switcher = 0
 const pagination = document.querySelector('.pagination-div-second')
 const wrapper = document.querySelector('.wrapper')
 const paginationPrev = document.querySelector('.pagination-div-prev')
 const paginationNext = document.querySelector('.pagination-div-next')
 const pageNumber = document.querySelector('.page-number')
-
+let i = 1
+let switcher = 0
 let currentActivePage = 1
 let paginationMaxValue = 10
 let paginationMinValue = 1
