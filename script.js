@@ -2,10 +2,10 @@ const API_URL =
   'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=887087e9e6cf3d40f8aead484e46c8b9&page='
 
 const HIGHEST_RATED_MOVIES_URL =
-  'http://api.themoviedb.org/3/discover/movie?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=887087e9e6cf3d40f8aead484e46c8b9'
+  'https://api.themoviedb.org/3/discover/movie?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=887087e9e6cf3d40f8aead484e46c8b9'
 
 const MOVIES_IN_THEATRES =
-  'http://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2018-10-22&api_key=887087e9e6cf3d40f8aead484e46c8b9'
+  'https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2018-10-22&api_key=887087e9e6cf3d40f8aead484e46c8b9'
 
 const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 
