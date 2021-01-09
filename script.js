@@ -1,6 +1,12 @@
 const API_URL =
   'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=887087e9e6cf3d40f8aead484e46c8b9&page='
 
+const HIGHEST_RATED_MOVIES_URL =
+  'http://api.themoviedb.org/3/discover/movie?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=887087e9e6cf3d40f8aead484e46c8b9'
+
+const MOVIES_IN_THEATRES =
+  'http://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2018-10-22&api_key=887087e9e6cf3d40f8aead484e46c8b9'
+
 const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 
 const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="'
@@ -8,15 +14,17 @@ const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c
 const header = document.querySelector('header')
 const videoIcon = document.querySelector('.fa-video')
 const form = document.getElementById('form')
-let search = document.getElementById('search')
+const wrapper = document.querySelector('.wrapper')
 const faSearch = document.querySelector('.fa-search')
 const faDelete = document.querySelector('.fa-times')
+const faStart = document.querySelector('.fa-star')
+const theater = document.querySelector('.fa-theater-masks')
 const toTheTop = document.querySelector('.to-the-top')
-const pagination = document.querySelector('.pagination-div-second')
-const wrapper = document.querySelector('.wrapper')
+const paginationDiv = document.querySelector('.pagination')
 const paginationPrev = document.querySelector('.pagination-div-prev')
 const paginationNext = document.querySelector('.pagination-div-next')
 const pageNumber = document.querySelector('.page-number')
+let search = document.getElementById('search')
 let i = 1
 let switcher = 0
 let currentActivePage = 1
@@ -138,7 +146,7 @@ window.onscroll = e => {
   }
 }
 
-async function searchedMovies(url) {
+async function getSpecificMovies(url) {
   wrapper.innerHTML = ''
   const res = await fetch(url)
   const data = await res.json()
@@ -156,7 +164,7 @@ form.addEventListener('submit', e => {
     paginationPrev.classList.add('hide')
     paginationNext.classList.add('hide')
     pageNumber.classList.add('hide')
-    searchedMovies(SEARCH_URL + searchText)
+    getSpecificMovies(SEARCH_URL + searchText)
     searchText.value = ''
   } else {
     wrapper.innerHTML = ''
@@ -187,11 +195,11 @@ faSearch.addEventListener('click', e => {
   const searchText = search.value
 
   if (searchText && searchText !== '') {
-    switcher = 1
     paginationPrev.classList.add('hide')
     paginationNext.classList.add('hide')
     pageNumber.classList.add('hide')
-    searchedMovies(SEARCH_URL + searchText)
+    switcher = 1
+    getSpecificMovies(SEARCH_URL + searchText)
     searchText.value = ''
   } else {
     refreshScreen()
@@ -212,3 +220,23 @@ function refreshScreen() {
   location.reload()
   upload40Movies()
 }
+
+faStart.addEventListener('click', () => {
+  if (window.innerWidth < 1024) paginationDiv.classList.add('resize')
+  paginationPrev.classList.add('hide')
+  paginationNext.classList.add('hide')
+  pageNumber.classList.add('hide')
+  wrapper.innerHTML = ''
+  switcher = 1
+  getSpecificMovies(HIGHEST_RATED_MOVIES_URL)
+})
+
+theater.addEventListener('click', () => {
+  wrapper.innerHTML = ''
+  if (window.innerWidth < 1024) paginationDiv.classList.add('resize')
+  paginationPrev.classList.add('hide')
+  paginationNext.classList.add('hide')
+  pageNumber.classList.add('hide')
+  switcher = 1
+  getSpecificMovies(MOVIES_IN_THEATRES)
+})
