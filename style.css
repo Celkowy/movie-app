@@ -5,8 +5,30 @@
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+  cursor: default;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: auto;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: gold;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
 :root {
   --main-color: #373b69;
   --second-color: #22254b;
@@ -90,6 +112,7 @@ header.hide {
   padding: 0.8rem 15px 0.8rem 1rem;
   color: white;
   font-family: inherit;
+  cursor: text;
 }
 
 #search::placeholder {
@@ -237,11 +260,13 @@ header.hide {
   position: absolute;
   bottom: 0;
   left: 0;
+  height: 100%;
   transform: translateY(101%);
   background-color: white;
   padding: 1rem;
   letter-spacing: 0.5px;
   transition: transform 0.4s ease-in;
+  overflow-y: scroll;
 }
 
 .movie:hover .overview {
@@ -253,10 +278,9 @@ header.hide {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
   display: none;
-  background-color: red;
+  background-color: var(--main-color);
+  border-radius: 5px;
   transition: opacity 0.3 ease;
   z-index: 3;
 }
@@ -266,12 +290,23 @@ header.hide {
   top: -3rem;
   right: -3rem;
   font-size: 3rem;
-  opacity: 0.3;
+  opacity: 0.7;
   color: white;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.delete:hover {
+  opacity: 1;
 }
 
 .pop-up.show {
   display: block;
+}
+
+.pop-up-info {
+  padding: 15px;
+  color: white;
 }
 
 .do-not-click {
@@ -287,6 +322,10 @@ header.hide {
 
 .do-not-click.active {
   display: block;
+}
+
+body.block {
+  overflow: hidden;
 }
 
 .rating.red {
@@ -393,7 +432,6 @@ h2.title {
   color: white;
   border-radius: 5px;
   background-color: var(--main-color);
-  cursor: pointer;
   margin: 5px;
   transition: opacity 0.2s ease;
 }
@@ -407,6 +445,10 @@ h2.title {
 .pagination-div-next.hide {
   display: none;
   box-shadow: 0 0 2px 5px green;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 .page-number {
@@ -428,7 +470,7 @@ h2.title {
 
   .fa-video {
     font-size: 1.7rem;
-    margin-left: 15px;
+    margin-left: 25px;
   }
 
   .fa-video:hover {
@@ -442,7 +484,7 @@ h2.title {
 
   .fa-star {
     font-size: 1.7rem;
-    margin-left: 15px;
+    margin-left: 25px;
   }
 
   .fa-star:hover {
@@ -451,7 +493,7 @@ h2.title {
 
   .fa-theater-masks {
     font-size: 1.7rem;
-    margin-left: 15px;
+    margin-left: 25px;
   }
 
   .fa-theater-masks:hover {
@@ -482,8 +524,41 @@ h2.title {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 380px) {
+  .fa-video {
+    margin-left: 15px;
+  }
+
+  .fa-star {
+    margin-left: 15px;
+  }
+
+  .fa-theater-masks {
+    margin-left: 15px;
+  }
+
   #search {
     width: 90px;
+  }
+}
+
+@media (max-width: 320px) {
+  .fa-video {
+    font-size: 1.5rem;
+    margin-left: 10px;
+  }
+
+  .fa-star {
+    font-size: 1.5rem;
+    margin-left: 10px;
+  }
+
+  .fa-theater-masks {
+    font-size: 1.5rem;
+    margin-left: 10px;
+  }
+
+  #search {
+    width: 80px;
   }
 }

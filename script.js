@@ -11,6 +11,10 @@ const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 
 const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="'
 
+const DETAILS_INFO = 'https://api.themoviedb.org/3/movie/'
+
+const DETAILS_INFO_REST = '?api_key=887087e9e6cf3d40f8aead484e46c8b9'
+
 const header = document.querySelector('header')
 const videoIcon = document.querySelector('.fa-video')
 const form = document.getElementById('form')
@@ -24,6 +28,8 @@ const paginationDiv = document.querySelector('.pagination')
 const paginationPrev = document.querySelector('.pagination-div-prev')
 const paginationNext = document.querySelector('.pagination-div-next')
 const pageNumber = document.querySelector('.page-number')
+const doNotClick = document.querySelector('.do-not-click')
+const del = document.querySelector('.delete')
 let search = document.getElementById('search')
 let i = 1
 let switcher = 0
@@ -112,10 +118,34 @@ function appendToDOM(movies) {
       ${overview}
     </div>
     `
+
     const details = div.querySelector('.details')
-    const popUp = document.querySelector('.pop-up')
+
     details.addEventListener('click', () => {
+      const popUp = document.querySelector('.pop-up')
+      doNotClick.classList.add('active')
+      document.body.classList.add('block')
+      del.addEventListener('click', () => {
+        popUp.classList.remove('show')
+        popUpInfo.innerHTML = ''
+        doNotClick.classList.remove('active')
+        document.body.classList.remove('block')
+        popUpInfo.remove()
+      })
+
+      const popUpInfo = document.createElement('div')
+      popUpInfo.setAttribute('class', 'pop-up-info')
+
       popUp.classList.add('show')
+      popUp.appendChild(popUpInfo)
+      getMoreInfo(details, popUpInfo)
+    })
+
+    details.dataset.id = movie.id
+
+    details.addEventListener('click', () => {
+      console.log(details.dataset.id)
+      appendMoreInfo(div, movie)
     })
 
     wrapper.appendChild(div)
@@ -124,6 +154,47 @@ function appendToDOM(movies) {
       div.classList.add('animation')
     }, index * 100)
   })
+}
+
+function appendMoreInfo(div, movie) {
+  // getMoreInfo(details, popUpInfo)
+}
+
+async function getMoreInfo(details, popUpInfo) {
+  const res = await fetch(DETAILS_INFO + details.dataset.id + DETAILS_INFO_REST)
+  const data = await res.json()
+  const extraInfo = data
+
+  const {
+    adult,
+    budget,
+    genres,
+    homepage,
+    id,
+    original_lanaguage,
+    original_title,
+    popularity,
+    poster_path,
+    production_companies,
+    production_countries,
+    relese_date,
+    reveneue,
+    runtime,
+    spoken_language,
+    tagline,
+    title,
+    vote_count,
+  } = extraInfo
+
+  popUpInfo.innerHTML = `
+  ${original_title}
+  ${title}
+  <div>https://www.themoviedb.org/movie/${id}</div>
+  ${extraInfo.production_companies.map(production_companies => production_companies.name).join('')}
+
+  Production countries: ${production_countries.map(production_countries => production_countries.name).join('')}
+  `
+  // appendToDOM(movies)
 }
 
 function changeRatingColor(rate) {
