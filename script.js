@@ -189,7 +189,7 @@ async function getMoreInfo(details, popUpInfo) {
   popUpInfo.innerHTML = `
   ${original_title}
   ${title}
-  <div>https://www.themoviedb.org/movie/${id}</div>
+  <a href="https://www.themoviedb.org/movie/${id} target="_blank"">https://www.themoviedb.org/movie/${id} <a>
   ${extraInfo.production_companies.map(production_companies => production_companies.name).join('')}
 
   Production countries: ${production_countries.map(production_countries => production_countries.name).join('')}

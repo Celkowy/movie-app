@@ -8,27 +8,16 @@
   cursor: default;
 }
 
-/* width */
 ::-webkit-scrollbar {
-  width: auto;
+  width: 10px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 5px;
-}
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  background: gold;
-  border-radius: 10px;
+  background: #ffd700;
+
+  opacity: 0.9;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #b30000;
-}
 :root {
   --main-color: #373b69;
   --second-color: #22254b;
@@ -168,6 +157,7 @@ header.hide {
   flex-direction: column;
   justify-content: space-between;
   width: 300px;
+  height: 550px;
   overflow: hidden;
   background-color: var(--main-color);
   margin: 1rem;
@@ -261,6 +251,7 @@ header.hide {
   bottom: 0;
   left: 0;
   height: 100%;
+  width: 100%;
   transform: translateY(101%);
   background-color: white;
   padding: 1rem;
