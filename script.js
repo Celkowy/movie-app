@@ -21,7 +21,7 @@ const form = document.getElementById('form')
 const wrapper = document.querySelector('.wrapper')
 const faSearch = document.querySelector('.fa-search')
 const faDelete = document.querySelector('.cross')
-const faStart = document.querySelector('.fa-star')
+const faStar = document.querySelector('.fa-star')
 const theater = document.querySelector('.fa-theater-masks')
 const toTheTop = document.querySelector('.to-the-top')
 const paginationDiv = document.querySelector('.pagination')
@@ -32,6 +32,7 @@ const doNotClick = document.querySelector('.do-not-click')
 const del = document.querySelector('.delete')
 let search = document.getElementById('search')
 let i = 1
+let preventFromSearching = 0
 let paginationSwitcher = 0
 let currentActivePage = 1
 let paginationMaxValue = 100
@@ -39,8 +40,10 @@ let paginationMinValue = 1
 let searchText = ''
 pageNumber.textContent = currentActivePage
 
-const paginationReset = [videoIcon, faStart, theater].forEach((icon, index) =>
+const paginationReset = [videoIcon, faStar, theater].forEach((icon, index) =>
   icon.addEventListener('click', () => {
+    faDelete.classList.remove('show')
+    search.value = ''
     i = 1
     if (index === 0) paginationSwitcher = 0
     else if (index === 1) paginationSwitcher = 1
@@ -61,7 +64,6 @@ paginationNext.addEventListener('click', () => {
   else if (paginationSwitcher === 1) upload40Movies(HIGHEST_RATED_MOVIES_URL)
   else if (paginationSwitcher === 2) upload40Movies(MOVIES_IN_THEATRES)
   else if (paginationSwitcher === 3) upload40Movies(SEARCH_URL + searchText)
-  console.log(i)
 })
 
 paginationPrev.addEventListener('click', () => {
@@ -76,7 +78,6 @@ paginationPrev.addEventListener('click', () => {
   else if (paginationSwitcher === 1) upload40Movies(HIGHEST_RATED_MOVIES_URL)
   else if (paginationSwitcher === 2) upload40Movies(MOVIES_IN_THEATRES)
   else if (paginationSwitcher === 3) upload40Movies(SEARCH_URL + searchText)
-  console.log(i)
 })
 
 function updateCurrentActivePage() {
@@ -92,7 +93,7 @@ function updateCurrentActivePage() {
     paginationNext.classList.remove('hide')
   }
 }
-console.log(i)
+
 upload40Movies(API_URL)
 
 async function upload40Movies(url) {
@@ -166,7 +167,6 @@ function appendToDOM(movies) {
     details.dataset.id = movie.id
 
     details.addEventListener('click', () => {
-      console.log(details.dataset.id)
       appendMoreInfo(div, movie)
     })
 
@@ -283,9 +283,8 @@ form.addEventListener('submit', e => {
   e.preventDefault()
   paginationSwitcher = 3
   searchText = search.value
-  console.log(searchText)
   searchText += '&page='
-  console.log(searchText)
+
   if (searchText && searchText !== '') {
     upload40Movies(SEARCH_URL + searchText)
     searchText.value = ''
@@ -299,7 +298,8 @@ form.addEventListener('submit', e => {
 form.addEventListener('input', () => {
   i = 1
   searchText = search.value
-
+  if (searchText != '') preventFromSearching = 1
+  else preventFromSearching = 0
   if (searchText === '') {
     faDelete.classList.remove('show')
   } else {
@@ -313,41 +313,32 @@ faDelete.addEventListener('click', () => {
   scrollToTheTop()
   search.focus()
   i = 1
+  preventFromSearching = 0
 })
 
 faSearch.addEventListener('click', e => {
   paginationSwitcher = 3
   searchText = search.value
   searchText += '&page='
-  if (searchText && searchText !== '') {
+  if (preventFromSearching === 1) {
     upload40Movies(SEARCH_URL + searchText)
     searchText.value = ''
-  } else {
-    refreshScreen()
+    preventFromSearching = 0
   }
 })
 
 videoIcon.addEventListener('click', () => {
-  search.value = ''
   faDelete.classList.remove('show')
-  refreshScreen()
+  i = 1
+  upload40Movies(API_URL)
 })
 
-function refreshScreen() {
-  wrapper.innerHTML = ''
-  i = 1
-  location.reload()
-  upload40Movies()
-}
-
-faStart.addEventListener('click', () => {
+faStar.addEventListener('click', () => {
   if (window.innerWidth < 1024) paginationDiv.classList.add('resize')
-  wrapper.innerHTML = ''
   upload40Movies(HIGHEST_RATED_MOVIES_URL)
 })
 
 theater.addEventListener('click', () => {
-  wrapper.innerHTML = ''
   if (window.innerWidth < 1024) paginationDiv.classList.add('resize')
   upload40Movies(MOVIES_IN_THEATRES)
 })
