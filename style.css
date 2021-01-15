@@ -277,7 +277,7 @@ nav.hide {
   position: fixed;
   left: 50%;
   top: 50%;
-  max-height: 90vh;
+  max-height: 95vh;
   transform: translate(-50%, -50%);
   display: none;
   background-color: white;
@@ -316,15 +316,18 @@ body.block {
   overflow: hidden;
 }
 
-.rating.red {
+.rating.red,
+.value.red {
   color: red;
 }
 
-.rating.orange {
+.rating.orange,
+.value.orange {
   color: orange;
 }
 
-.rating.green {
+.rating.green,
+.value.green {
   color: green;
 }
 
@@ -410,11 +413,7 @@ h2.title {
   margin-left: 0;
 }
 
-.change-width {
-  width: 25%;
-}
-
-.italic {
+.thin {
   color: rgba(0, 0, 0, 0.6);
   font-weight: 200;
 }
@@ -423,9 +422,82 @@ h2.title {
   margin-top: 10px;
 }
 
+.table {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  justify-content: center;
+  display: flex;
+}
+
+.table-element {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.second-table-element {
+  flex-basis: 50%;
+}
+
+.second {
+  border-top: none;
+}
+
+.value {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.value.votes {
+  color: #f2711c;
+}
+
+.value.popularity {
+  color: #fbbd08;
+}
+
+.value.release-date {
+  color: #b5cc18;
+}
+
+.center {
+  text-align: center;
+}
+
+.label {
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.table-element:nth-child(1),
+.table-element:nth-child(2),
+.table-element:nth-child(3) {
+  border-right: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+.table-element:nth-child(2).second-table-element {
+  border: none;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.margin-top {
+  margin-top: 10px;
+}
+
 ul {
   margin-left: 30px;
   list-style-type: square;
+}
+
+.link {
+  font-size: 1rem;
 }
 
 .to-the-top {
@@ -520,6 +592,26 @@ ul {
 }
 
 @media (max-width: 1024px) {
+  .change-display {
+    display: block;
+  }
+
+  .first,
+  .second,
+  .third {
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+  }
+
+  .table-element:nth-child(1),
+  .table-element:nth-child(2),
+  .table-element:nth-child(3) {
+    border-right: none;
+  }
+
+  .second-table-element:nth-child(1) {
+    border-right: 1px solid rgba(34, 36, 38, 0.15);
+  }
+
   .logo {
     width: 150px;
   }

@@ -110,6 +110,7 @@ function appendToDOM(movies) {
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
     div.innerHTML = `
+    
     <img src="${poster_path ? IMG_PATH + poster_path : './img/jazz-backup.jpg'}"/>
     <div class="movie-info">
       <h2 class="title">${title}</h2>
@@ -122,8 +123,7 @@ function appendToDOM(movies) {
       </div>
       ${overview}
     </div>
-    `
-
+`
     const details = div.querySelector('.details')
 
     details.addEventListener('click', () => {
@@ -168,38 +168,62 @@ async function getMoreInfo(details, popUpInfo) {
     homepage,
     id,
     overview,
-    original_language,
     original_title,
     popularity,
-    poster_path,
+    backdrop_path,
     production_countries,
     release_date,
     revenue,
     runtime,
     tagline,
     title,
+    vote_average,
     vote_count,
+    poster_path,
   } = extraInfo
 
   popUpInfo.innerHTML = `
 
   <div class="more">
-  <div class="flex-me">
-    <h3 class="overview-text">More information</h3>
-    <div class="back">Back</div>
-  </div>
+  
+    <div class="flex-me">
+      <h3 class="overview-text">More information</h3>
+      <div class="back">Back</div>
+    </div>
 
-  <div class="more-content">
-    <div class="more-content-ui">
-      <i class="fas fa-film"></i>
+    <div class="more-content">
+      <div class="more-content-ui">
+        <i class="fas fa-film"></i>
 
       <div class="content">
         <div>
           <h2>${title}</h2>
-          <h3 class="italic">${original_title}</h3>
+          <h3 class="thin">${original_title}</h3>
         </div>
       </div>
-      <p class="change-width">${release_date}</p>
+    </div>
+
+    <p class="margin-top italic">${tagline}</p>
+
+    <img class="margin-top resize" src="${backdrop_path ? IMG_PATH + backdrop_path : IMG_PATH + poster_path}" />
+
+    <div class="table change-display">
+      <div class="table-element first">
+        <div class="value ${changeRatingColor(vote_average)}">${vote_average}</div>
+        <div class="label">rate</div>
+      </div>
+      <div class="table-element second">
+        <div class="value votes">${vote_count}</div>
+        <div class="label">votes</div>
+      </div>
+      <div class="table-element third">
+        <div class="value popularity">${popularity}</div>
+        <div class="label">popularity</div>
+      </div>
+      <div class="table-element">
+        <div class="value release-date">${release_date}</div>
+        <div class="label">release date</div>
+      </div>
     </div>
 
     <h3 class="overview-margin">Overview</h3>
@@ -229,44 +253,42 @@ async function getMoreInfo(details, popUpInfo) {
         ${extraInfo.production_companies.map(production_companies => `<li>${production_companies.name}</li>`).join('')}
       </ul>
     </div>
+
+    <div class="second table">
+    <div class="table-element second-table-element">
+      <div class="value red">${checkIfEqualZero(budget)}</div>
+      <div class="label">budget</div>
+    </div>
+    <div class="table-element second-table-element">
+      <div class="value green">${checkIfEqualZero(revenue)}</div>
+      <div class="label">revenue</div>
+    </div>
+    </div>
+
+    <div class="second table">
+    <div class="table-element second-table-element">
+      <div class="value">${adult}</div>
+      <div class="label">adult-only</div>
+    </div>
+    <div class="table-element second-table-element">
+      <div class="value">${runtime} min</div>
+      <div class="label">runtime</div>
+    </div>
+    </div>
+
+    <div class="second table">
+      <div class="table-element second-table-element">
+        <div class="value center">
+          <a class="link" href="https://www.themoviedb.org/movie/${id}" target="_blank">themoviedb</a>
+        </div>
+      <div class="label">tmdb</div>
+    </div>
+
+    <div class="table-element second-table-element">
+      <div class="value center"><a class="link" href="${homepage}">${title}</a></div>
+      <div class="label">Homepage</div>
+    </div>
   </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <a href="https://www.themoviedb.org/movie/${id}" target="_blank">${title}</a></h3>
-  
-  
-  
-
-  Production countries: ${production_countries.map(production_countries => production_countries.name).join('')}
-  
-  <p>Original language: ${original_language}</p>
-  <p>Popularity: ${popularity}</p>
-  
-  <p>Homepage: <a href="${homepage}">${homepage}</a></p>
-  
-  <p>Vote count: ${vote_count}</p>
-  <p>Revenue: ${revenue}</p>
-  <p>Runtime: ${runtime}</p>
-  <p>Tagline: ${tagline}</p>
-  </div>
- 
-
-</div>
   `
   const back = popUpInfo.querySelector('.back')
   back.addEventListener('click', () => {
@@ -386,4 +408,9 @@ function changeRatingColor(rate) {
 function scrollToTheTop() {
   document.body.scrollTop = 0
   document.documentElement.scrollTop = 0
+}
+
+const checkIfEqualZero = element => {
+  if (element === 0) return 'unknown'
+  else return element
 }
