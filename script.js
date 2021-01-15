@@ -1,3 +1,6 @@
+import { get } from './data.js'
+import { create } from './data.js'
+
 const API_URL =
   'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=887087e9e6cf3d40f8aead484e46c8b9&page='
 
@@ -6,8 +9,6 @@ const HIGHEST_RATED_MOVIES_URL =
 
 const MOVIES_IN_THEATRES =
   'https://api.themoviedb.org/3/movie/now_playing?api_key=887087e9e6cf3d40f8aead484e46c8b9&language=en-US&page='
-
-const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 
 const SEARCH_URL = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="'
 
@@ -24,7 +25,6 @@ const faDelete = document.querySelector('.cross')
 const faStar = document.querySelector('.fa-star')
 const theater = document.querySelector('.fa-theater-masks')
 const toTheTop = document.querySelector('.to-the-top')
-const paginationDiv = document.querySelector('.pagination')
 const paginationPrev = document.querySelector('.pagination-div-prev')
 const paginationNext = document.querySelector('.pagination-div-next')
 const pageNumber = document.querySelector('.page-number')
@@ -105,25 +105,11 @@ async function getMovies(url) {
 
 function appendToDOM(movies) {
   movies.forEach((movie, index) => {
-    const { title, poster_path, vote_average, overview } = movie
-
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
-    div.innerHTML = `
-    
-    <img src="${poster_path ? IMG_PATH + poster_path : './img/jazz-backup.jpg'}"/>
-    <div class="movie-info">
-      <h2 class="title">${title}</h2>
-      <h3 class="rating ${changeRatingColor(vote_average)}">${vote_average}</h3>
-    </div>
-    <div class="overview active">
-      <div class="flex-me">
-        <h3 class="overview-text">Overview</h3>
-        <div class="details">More</div>
-      </div>
-      ${overview}
-    </div>
-`
+
+    div.innerHTML = create(movie)
+
     const details = div.querySelector('.details')
 
     details.addEventListener('click', () => {
@@ -140,10 +126,6 @@ function appendToDOM(movies) {
 
     details.dataset.id = movie.id
 
-    details.addEventListener('click', () => {
-      appendMoreInfo(div, movie)
-    })
-
     wrapper.appendChild(div)
 
     setTimeout(() => {
@@ -152,144 +134,12 @@ function appendToDOM(movies) {
   })
 }
 
-function appendMoreInfo(div, movie) {
-  // getMoreInfo(details, popUpInfo)
-}
-
 async function getMoreInfo(details, popUpInfo) {
   const res = await fetch(DETAILS_INFO + details.dataset.id + DETAILS_INFO_REST)
   const data = await res.json()
   const extraInfo = data
 
-  const {
-    adult,
-    budget,
-    genres,
-    homepage,
-    id,
-    overview,
-    original_title,
-    popularity,
-    backdrop_path,
-    production_countries,
-    release_date,
-    revenue,
-    runtime,
-    tagline,
-    title,
-    vote_average,
-    vote_count,
-    poster_path,
-  } = extraInfo
-
-  popUpInfo.innerHTML = `
-
-  <div class="more">
-  
-    <div class="flex-me">
-      <h3 class="overview-text">More information</h3>
-      <div class="back">Back</div>
-    </div>
-
-    <div class="more-content">
-      <div class="more-content-ui">
-        <i class="fas fa-film"></i>
-
-      <div class="content">
-        <div>
-          <h2>${title}</h2>
-          <h3 class="thin">${original_title}</h3>
-        </div>
-      </div>
-    </div>
-
-    <p class="margin-top italic">${tagline}</p>
-
-    <img class="margin-top resize" src="${backdrop_path ? IMG_PATH + backdrop_path : IMG_PATH + poster_path}" />
-
-    <div class="table change-display">
-      <div class="table-element first">
-        <div class="value ${changeRatingColor(vote_average)}">${vote_average}</div>
-        <div class="label">rate</div>
-      </div>
-      <div class="table-element second">
-        <div class="value votes">${vote_count}</div>
-        <div class="label">votes</div>
-      </div>
-      <div class="table-element third">
-        <div class="value popularity">${popularity}</div>
-        <div class="label">popularity</div>
-      </div>
-      <div class="table-element">
-        <div class="value release-date">${release_date}</div>
-        <div class="label">release date</div>
-      </div>
-    </div>
-
-    <h3 class="overview-margin">Overview</h3>
-
-    <div class="more-content-ui">
-      <div class="content no-margin">${overview}</div>
-    </div>
-
-    <h3 class="overview-margin">Genres</h3>
-
-    <div class="more-content-ui">
-      <ul>
-        ${genres.map(genre => `<li>${genre.name}</li>`).join('')}
-      </ul>
-    </div>
-
-    <h3 class="overview-margin">Production countries</h3>
-    <div class="more-content-ui">
-      <ul>
-        ${production_countries.map(production_countries => `<li>${production_countries.name}</li>`).join('')}
-      </ul>
-    </div>
-
-    <h3 class="overview-margin">Production companies</h3>
-    <div class="more-content-ui">
-      <ul>
-        ${extraInfo.production_companies.map(production_companies => `<li>${production_companies.name}</li>`).join('')}
-      </ul>
-    </div>
-
-    <div class="second table">
-    <div class="table-element second-table-element">
-      <div class="value red">${checkIfEqualZero(budget)}</div>
-      <div class="label">budget</div>
-    </div>
-    <div class="table-element second-table-element">
-      <div class="value green">${checkIfEqualZero(revenue)}</div>
-      <div class="label">revenue</div>
-    </div>
-    </div>
-
-    <div class="second table">
-    <div class="table-element second-table-element">
-      <div class="value">${adult}</div>
-      <div class="label">adult-only</div>
-    </div>
-    <div class="table-element second-table-element">
-      <div class="value">${runtime} min</div>
-      <div class="label">runtime</div>
-    </div>
-    </div>
-
-    <div class="second table">
-      <div class="table-element second-table-element">
-        <div class="value center">
-          <a class="link" href="https://www.themoviedb.org/movie/${id}" target="_blank">themoviedb</a>
-        </div>
-      <div class="label">tmdb</div>
-    </div>
-
-    <div class="table-element second-table-element">
-      <div class="value center"><a class="link" href="${homepage}">${title}</a></div>
-      <div class="label">Homepage</div>
-    </div>
-  </div>
-  `
+  popUpInfo.innerHTML = get(extraInfo)
   const back = popUpInfo.querySelector('.back')
   back.addEventListener('click', () => {
     popUp.classList.remove('show')
@@ -359,7 +209,6 @@ faSearch.addEventListener('click', e => {
   searchText += '&page='
   if (preventFromSearching === 1) {
     upload40Movies(SEARCH_URL + searchText)
-    searchText.value = ''
     preventFromSearching = 0
   }
 })
@@ -399,18 +248,7 @@ function updateCurrentActivePage() {
   }
 }
 
-function changeRatingColor(rate) {
-  if (rate < 5) return 'red'
-  else if (rate > 5 && rate < 7) return 'orange'
-  else return 'green'
-}
-
 function scrollToTheTop() {
   document.body.scrollTop = 0
   document.documentElement.scrollTop = 0
-}
-
-const checkIfEqualZero = element => {
-  if (element === 0) return 'unknown'
-  else return element
 }
