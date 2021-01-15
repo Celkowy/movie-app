@@ -15,7 +15,7 @@ const DETAILS_INFO = 'https://api.themoviedb.org/3/movie/'
 
 const DETAILS_INFO_REST = '?api_key=887087e9e6cf3d40f8aead484e46c8b9'
 
-const header = document.querySelector('header')
+const header = document.querySelector('nav')
 const videoIcon = document.querySelector('.fa-video')
 const form = document.getElementById('form')
 const wrapper = document.querySelector('.wrapper')
@@ -29,8 +29,9 @@ const paginationPrev = document.querySelector('.pagination-div-prev')
 const paginationNext = document.querySelector('.pagination-div-next')
 const pageNumber = document.querySelector('.page-number')
 const doNotClick = document.querySelector('.do-not-click')
-const del = document.querySelector('.delete')
 let search = document.getElementById('search')
+const popUp = document.querySelector('.pop-up')
+
 let i = 1
 let preventFromSearching = 0
 let paginationSwitcher = 0
@@ -129,7 +130,7 @@ function appendToDOM(movies) {
     const div = document.createElement('div')
     div.setAttribute('class', 'movie')
     div.innerHTML = `
-    <img src="${poster_path ? IMG_PATH + poster_path : './img/jazz.jpg'}"/>
+    <img src="${poster_path ? IMG_PATH + poster_path : './img/jazz-backup.jpg'}"/>
     <div class="movie-info">
       <h2 class="title">${title}</h2>
       <h3 class="rating ${changeRatingColor(vote_average)}">${vote_average}</h3>
@@ -146,16 +147,8 @@ function appendToDOM(movies) {
     const details = div.querySelector('.details')
 
     details.addEventListener('click', () => {
-      const popUp = document.querySelector('.pop-up')
       doNotClick.classList.add('active')
       document.body.classList.add('block')
-      del.addEventListener('click', () => {
-        popUp.classList.remove('show')
-        popUpInfo.innerHTML = ''
-        doNotClick.classList.remove('active')
-        document.body.classList.remove('block')
-        popUpInfo.remove()
-      })
 
       const popUpInfo = document.createElement('div')
       popUpInfo.setAttribute('class', 'pop-up-info')
@@ -242,6 +235,14 @@ async function getMoreInfo(details, popUpInfo) {
 
  
   `
+  const back = popUpInfo.querySelector('.back')
+  back.addEventListener('click', () => {
+    popUp.classList.remove('show')
+    popUpInfo.innerHTML = ''
+    doNotClick.classList.remove('active')
+    document.body.classList.remove('block')
+    popUpInfo.remove()
+  })
   // appendToDOM(movies)
 }
 
@@ -327,11 +328,9 @@ videoIcon.addEventListener('click', () => {
 })
 
 faStar.addEventListener('click', () => {
-  if (window.innerWidth < 1024) paginationDiv.classList.add('resize')
   upload40Movies(HIGHEST_RATED_MOVIES_URL)
 })
 
 theater.addEventListener('click', () => {
-  if (window.innerWidth < 1024) paginationDiv.classList.add('resize')
   upload40Movies(MOVIES_IN_THEATRES)
 })

@@ -8,6 +8,10 @@
   cursor: default;
 }
 
+.icon-color {
+  background-color: gold;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -29,7 +33,7 @@ body {
   background-color: var(--second-color);
 }
 
-header {
+nav {
   position: sticky;
   top: 0;
   left: 0;
@@ -42,7 +46,7 @@ header {
   transition: top 0.3s ease;
 }
 
-header.hide {
+nav.hide {
   top: -90px;
 }
 
@@ -283,21 +287,6 @@ header.hide {
   overflow-y: scroll;
 }
 
-.delete {
-  position: absolute;
-  top: -3rem;
-  right: -3rem;
-  font-size: 3rem;
-  opacity: 0.7;
-  color: white;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.delete:hover {
-  opacity: 1;
-}
-
 .pop-up.show {
   display: block;
 }
@@ -369,6 +358,31 @@ h2.title {
   border-radius: 5px;
 }
 
+.overview-text {
+  display: inline-block;
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--second-color);
+  margin-bottom: 0.5rem;
+}
+
+.more-information {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-top: none;
+  height: 15%;
+  border-bottom: 2px solid var(--second-color);
+}
+
+.back {
+  font-weight: bold;
+  border: none;
+  color: red;
+  border-bottom: 2px solid red;
+  cursor: pointer;
+}
+
 .to-the-top {
   position: fixed;
   display: none;
@@ -387,6 +401,9 @@ h2.title {
   display: flex;
 }
 
+.arrow-up {
+  cursor: pointer;
+}
 .to-the-top:hover .arrow-up {
   animation: to-the-top-animation 0.3s ease;
 }
@@ -416,10 +433,6 @@ h2.title {
   align-items: center;
   font-size: 3rem;
   color: white;
-}
-
-.pagination.resize {
-  height: 50px;
 }
 
 .pagination-div-prev,
@@ -528,12 +541,6 @@ h2.title {
   .pop-up-info {
     padding: 1rem;
   }
-
-  .delete {
-    top: -30px;
-    right: -25px;
-    font-size: 2rem;
-  }
 }
 
 @media (max-width: 640px) {
@@ -541,39 +548,9 @@ h2.title {
     display: none;
   }
 
-  .delete {
-    top: 5px;
-    right: 5px;
-  }
-
   .pop-up {
     height: 95vh;
     width: 95vw;
-  }
-
-  .overview-text {
-    display: inline-block;
-    font-size: 1.5rem;
-    border-bottom: 2px solid var(--second-color);
-    margin-bottom: 0.5rem;
-  }
-
-  .more-information {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-top: none;
-    height: 15%;
-    border-bottom: 2px solid var(--second-color);
-  }
-
-  .back {
-    font-weight: bold;
-    border: none;
-    color: red;
-    border-bottom: 2px solid red;
-    cursor: pointer;
   }
 }
 
