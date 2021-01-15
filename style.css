@@ -270,10 +270,12 @@ header.hide {
   top: 50%;
   transform: translate(-50%, -50%);
   display: none;
-  background-color: var(--main-color);
+  background-color: white;
   border-radius: 5px;
   transition: opacity 0.3 ease;
   z-index: 3;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .delete {
@@ -297,7 +299,7 @@ header.hide {
 
 .pop-up-info {
   padding: 15px;
-  color: white;
+  color: black;
 }
 
 .do-not-click {
@@ -512,6 +514,53 @@ h2.title {
   .fa-search {
     margin-right: 15px;
     font-size: 1rem;
+  }
+
+  .pop-up-info {
+    padding: 1rem;
+  }
+
+  .delete {
+    top: -30px;
+    right: -25px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .delete {
+    top: 5px;
+    right: 5px;
+  }
+
+  .pop-up {
+    height: 95vh;
+    width: 95vw;
+  }
+
+  .overview-text {
+    display: inline-block;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--second-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .more-information {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: none;
+    height: 15%;
+    border-bottom: 2px solid var(--second-color);
+  }
+
+  .back {
+    font-weight: bold;
+    border: none;
+    color: red;
+    border-bottom: 2px solid red;
+    cursor: pointer;
   }
 }
 
