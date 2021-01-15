@@ -15,7 +15,7 @@ const DETAILS_INFO = 'https://api.themoviedb.org/3/movie/'
 
 const DETAILS_INFO_REST = '?api_key=887087e9e6cf3d40f8aead484e46c8b9'
 
-const header = document.querySelector('nav')
+const nav = document.querySelector('nav')
 const videoIcon = document.querySelector('.fa-video')
 const form = document.getElementById('form')
 const wrapper = document.querySelector('.wrapper')
@@ -62,10 +62,7 @@ paginationNext.addEventListener('click', () => {
   pageNumber.innerHTML = currentActivePage
   wrapper.innerHTML = ''
   updateCurrentActivePage()
-  if (paginationSwitcher === 0) upload40Movies(API_URL)
-  else if (paginationSwitcher === 1) upload40Movies(HIGHEST_RATED_MOVIES_URL)
-  else if (paginationSwitcher === 2) upload40Movies(MOVIES_IN_THEATRES)
-  else if (paginationSwitcher === 3) upload40Movies(SEARCH_URL + searchText)
+  switchPaginationTarget()
 })
 
 paginationPrev.addEventListener('click', () => {
@@ -76,25 +73,8 @@ paginationPrev.addEventListener('click', () => {
   i -= 4
   if (i <= 0) i = 1
   updateCurrentActivePage()
-  if (paginationSwitcher === 0) upload40Movies(API_URL)
-  else if (paginationSwitcher === 1) upload40Movies(HIGHEST_RATED_MOVIES_URL)
-  else if (paginationSwitcher === 2) upload40Movies(MOVIES_IN_THEATRES)
-  else if (paginationSwitcher === 3) upload40Movies(SEARCH_URL + searchText)
+  switchPaginationTarget()
 })
-
-function updateCurrentActivePage() {
-  if (currentActivePage == paginationMinValue) {
-    paginationPrev.classList.add('hide')
-  } else {
-    paginationPrev.classList.remove('hide')
-  }
-
-  if (currentActivePage == paginationMaxValue) {
-    paginationNext.classList.add('hide')
-  } else {
-    paginationNext.classList.remove('hide')
-  }
-}
 
 upload40Movies(API_URL)
 
@@ -187,16 +167,15 @@ async function getMoreInfo(details, popUpInfo) {
     genres,
     homepage,
     id,
-    original_lanaguage,
+    overview,
+    original_language,
     original_title,
     popularity,
     poster_path,
-    production_companies,
     production_countries,
     release_date,
     revenue,
     runtime,
-    spoken_language,
     tagline,
     title,
     vote_count,
@@ -209,31 +188,85 @@ async function getMoreInfo(details, popUpInfo) {
     <h3 class="overview-text">More information</h3>
     <div class="back">Back</div>
   </div>
+
   <div class="more-content">
-  <h2>${original_title}</h2>
-  <h3 class="italic">${title}
-  <a href="https://www.themoviedb.org/movie/${id} target="_blank"">${title}</a></h3>
-  
-  <p>Production companies: ${extraInfo.production_companies
-    .map(production_companies => production_companies.name)
-    .join('')}</p>
-  
+    <div class="more-content-ui">
+      <i class="fas fa-film"></i>
 
-  Production countries: ${production_countries.map(production_countries => production_countries.name).join('')}
- 
-   
-    <p>Release date: ${release_date}</p>
-  <p>Vote count: ${vote_count}</p>
-  <p>Revenue: ${revenue}</p>
+      <div class="content">
+        <div>
+          <h2>${title}</h2>
+          <h3 class="italic">${original_title}</h3>
+        </div>
+      </div>
+      <p class="change-width">${release_date}</p>
+    </div>
+
+    <h3 class="overview-margin">Overview</h3>
+
+    <div class="more-content-ui">
+      <div class="content no-margin">${overview}</div>
+    </div>
+
+    <h3 class="overview-margin">Genres</h3>
+
+    <div class="more-content-ui">
+      <ul>
+        ${genres.map(genre => `<li>${genre.name}</li>`).join('')}
+      </ul>
+    </div>
+
+    <h3 class="overview-margin">Production countries</h3>
+    <div class="more-content-ui">
+      <ul>
+        ${production_countries.map(production_countries => `<li>${production_countries.name}</li>`).join('')}
+      </ul>
+    </div>
+
+    <h3 class="overview-margin">Production companies</h3>
+    <div class="more-content-ui">
+      <ul>
+        ${extraInfo.production_companies.map(production_companies => `<li>${production_companies.name}</li>`).join('')}
+      </ul>
+    </div>
   </div>
-  
-
-
 </div>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <a href="https://www.themoviedb.org/movie/${id}" target="_blank">${title}</a></h3>
+  
+  
+  
+
+  Production countries: ${production_countries.map(production_countries => production_countries.name).join('')}
+  
+  <p>Original language: ${original_language}</p>
+  <p>Popularity: ${popularity}</p>
+  
+  <p>Homepage: <a href="${homepage}">${homepage}</a></p>
+  
+  <p>Vote count: ${vote_count}</p>
+  <p>Revenue: ${revenue}</p>
+  <p>Runtime: ${runtime}</p>
+  <p>Tagline: ${tagline}</p>
+  </div>
  
+
+</div>
   `
   const back = popUpInfo.querySelector('.back')
   back.addEventListener('click', () => {
@@ -243,18 +276,6 @@ async function getMoreInfo(details, popUpInfo) {
     document.body.classList.remove('block')
     popUpInfo.remove()
   })
-  // appendToDOM(movies)
-}
-
-function changeRatingColor(rate) {
-  if (rate < 5) return 'red'
-  else if (rate > 5 && rate < 7) return 'orange'
-  else return 'green'
-}
-
-function scrollToTheTop() {
-  document.body.scrollTop = 0
-  document.documentElement.scrollTop = 0
 }
 
 toTheTop.addEventListener('click', () => {
@@ -262,8 +283,8 @@ toTheTop.addEventListener('click', () => {
 })
 
 window.onscroll = e => {
-  if (this.oldScroll < this.scrollY) header.classList.add('hide')
-  else header.classList.remove('hide')
+  if (this.oldScroll < this.scrollY) nav.classList.add('hide')
+  else nav.classList.remove('hide')
   this.oldScroll = this.scrollY
 
   if (this.scrollY == 0) {
@@ -334,3 +355,35 @@ faStar.addEventListener('click', () => {
 theater.addEventListener('click', () => {
   upload40Movies(MOVIES_IN_THEATRES)
 })
+
+const switchPaginationTarget = () => {
+  if (paginationSwitcher === 0) upload40Movies(API_URL)
+  else if (paginationSwitcher === 1) upload40Movies(HIGHEST_RATED_MOVIES_URL)
+  else if (paginationSwitcher === 2) upload40Movies(MOVIES_IN_THEATRES)
+  else if (paginationSwitcher === 3) upload40Movies(SEARCH_URL + searchText)
+}
+
+function updateCurrentActivePage() {
+  if (currentActivePage == paginationMinValue) {
+    paginationPrev.classList.add('hide')
+  } else {
+    paginationPrev.classList.remove('hide')
+  }
+
+  if (currentActivePage == paginationMaxValue) {
+    paginationNext.classList.add('hide')
+  } else {
+    paginationNext.classList.remove('hide')
+  }
+}
+
+function changeRatingColor(rate) {
+  if (rate < 5) return 'red'
+  else if (rate > 5 && rate < 7) return 'orange'
+  else return 'green'
+}
+
+function scrollToTheTop() {
+  document.body.scrollTop = 0
+  document.documentElement.scrollTop = 0
+}
