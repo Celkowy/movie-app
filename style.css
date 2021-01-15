@@ -82,6 +82,11 @@ header.hide {
   transform: scale(0.8);
 }
 
+.logo {
+  width: 250px;
+  cursor: pointer;
+}
+
 .wrapper {
   position: relative;
   display: flex;
@@ -457,6 +462,10 @@ h2.title {
 }
 
 @media (max-width: 1024px) {
+  .logo {
+    width: 150px;
+  }
+
   .to-the-top:hover .arrow-up {
     animation: none;
   }
@@ -528,6 +537,10 @@ h2.title {
 }
 
 @media (max-width: 640px) {
+  .logo {
+    display: none;
+  }
+
   .delete {
     top: 5px;
     right: 5px;

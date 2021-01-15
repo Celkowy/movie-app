@@ -5,7 +5,7 @@ const HIGHEST_RATED_MOVIES_URL =
   'https://api.themoviedb.org/3/discover/movie?certification_country=US&certification=R&sort_by=vote_average.desc&api_key=887087e9e6cf3d40f8aead484e46c8b9&page='
 
 const MOVIES_IN_THEATRES =
-  'https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2018-10-22&api_key=887087e9e6cf3d40f8aead484e46c8b9&page='
+  'https://api.themoviedb.org/3/movie/now_playing?api_key=887087e9e6cf3d40f8aead484e46c8b9&language=en-US&page='
 
 const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 
@@ -38,6 +38,7 @@ let currentActivePage = 1
 let paginationMaxValue = 100
 let paginationMinValue = 1
 let searchText = ''
+
 pageNumber.textContent = currentActivePage
 
 const paginationReset = [videoIcon, faStar, theater].forEach((icon, index) =>
@@ -270,14 +271,6 @@ window.onscroll = e => {
     toTheTop.classList.add('show')
   }
 }
-
-// async function getSpecificMovies(url) {
-//   wrapper.innerHTML = ''
-//   const res = await fetch(url)
-//   const data = await res.json()
-//   const movies = data.results
-//   appendToDOM(movies)
-// }
 
 form.addEventListener('submit', e => {
   e.preventDefault()
