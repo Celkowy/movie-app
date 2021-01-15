@@ -154,7 +154,7 @@ toTheTop.addEventListener('click', () => {
   scrollToTheTop()
 })
 
-window.onscroll = e => {
+function hideNav(e) {
   if (this.oldScroll < this.scrollY) nav.classList.add('hide')
   else nav.classList.remove('hide')
   this.oldScroll = this.scrollY
@@ -166,6 +166,8 @@ window.onscroll = e => {
   }
 }
 
+window.addEventListener('scroll', hideNav)
+
 form.addEventListener('submit', e => {
   e.preventDefault()
   paginationSwitcher = 3
@@ -174,7 +176,6 @@ form.addEventListener('submit', e => {
 
   if (searchText && searchText !== '') {
     upload40Movies(SEARCH_URL + searchText)
-    searchText.value = ''
   } else {
     wrapper.innerHTML = ''
     i = 1
