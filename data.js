@@ -100,8 +100,13 @@ export const get = function getInfo(extraInfo) {
 
     <h3 class="overview-margin">Production countries</h3>
     <div class="more-content-ui">
-      <ul>
-        ${production_countries.map(production_countries => `<li>${production_countries.name}</li>`).join('')}
+      <ul class="margin-left-change">
+      ${production_countries
+        .map(
+          country =>
+            `<li class="align-vertically"><img class="flag" src="https://www.countryflags.io/${country.iso_3166_1}/flat/64.png">${country.name}</li>`
+        )
+        .join('')}
       </ul>
     </div>
 
@@ -125,7 +130,7 @@ export const get = function getInfo(extraInfo) {
 
     <div class="second table">
       <div class="table-element second-table-element">
-        <div class="value">${adult}</div>
+        <div class="value">${changeAdultValue(adult)}</div>
         <div class="label">adult-only</div>
       </div>
       <div class="table-element second-table-element">
@@ -150,7 +155,7 @@ export const get = function getInfo(extraInfo) {
 `
 }
 
-function changeRatingColor(rate) {
+const changeRatingColor = rate => {
   if (rate < 5) return 'red'
   else if (rate > 5 && rate < 7) return 'orange'
   else return 'green'
@@ -160,3 +165,13 @@ const checkIfEqualZero = element => {
   if (element === 0) return 'unknown'
   else return element
 }
+
+const changeAdultValue = adult => {
+  if (adult == false) return 'no'
+  else return adult
+}
+
+// const everyThirdDigitInsertDot = element => {
+//   return element.replace(/\d{3}(?=\d{3})/, ' ')
+// }
+// ????

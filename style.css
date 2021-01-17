@@ -459,7 +459,7 @@ h2.title {
 }
 
 .value.release-date {
-  color: #b5cc18;
+  color: black;
 }
 
 .center {
@@ -496,8 +496,19 @@ ul {
   list-style-type: square;
 }
 
-.link {
-  font-size: 1rem;
+.margin-left-change {
+  margin-left: 10px;
+}
+
+.flag {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.align-vertically {
+  display: flex;
+  align-items: center;
 }
 
 .to-the-top {
