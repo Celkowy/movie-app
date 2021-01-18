@@ -45,7 +45,7 @@ export const get = function getInfo(extraInfo) {
   <div class="more">
   
     <div class="flex-me">
-      <h3 class="overview-text">More information</h3>
+      <h3 class="overview-text show-border">More information</h3>
       <div class="back">Back</div>
     </div>
 
@@ -62,7 +62,8 @@ export const get = function getInfo(extraInfo) {
 
     <p class="margin-top italic">${tagline}</p>
 
-    <img class="margin-top resize" src="${backdrop_path ? IMG_PATH + backdrop_path : IMG_PATH + poster_path}" />
+    
+    <img class="margin-top resize" src="${whatPosterToDisplay(backdrop_path, poster_path)}" />
 
     <div class="table change-display">
       <div class="table-element first">
@@ -119,11 +120,11 @@ export const get = function getInfo(extraInfo) {
 
     <div class="second table">
     <div class="table-element second-table-element">
-      <div class="value red">${checkIfEqualZero(budget)}</div>
+      <div class="value red">${everyThirdDigitInsertDot(budget.toString())}</div>
       <div class="label">budget</div>
     </div>
     <div class="table-element second-table-element">
-      <div class="value green">${checkIfEqualZero(revenue)}</div>
+      <div class="value green">${everyThirdDigitInsertDot(revenue.toString())}</div>
       <div class="label">revenue</div>
     </div>
     </div>
@@ -161,17 +162,18 @@ const changeRatingColor = rate => {
   else return 'green'
 }
 
-const checkIfEqualZero = element => {
-  if (element === 0) return 'unknown'
-  else return element
-}
-
 const changeAdultValue = adult => {
   if (adult == false) return 'no'
   else return adult
 }
 
-// const everyThirdDigitInsertDot = element => {
-//   return element.replace(/\d{3}(?=\d{3})/, ' ')
-// }
-// ????
+const everyThirdDigitInsertDot = element => {
+  if (element == 0) return 'unknown'
+  else return element.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+}
+
+const whatPosterToDisplay = (backdrop_path, poster_path) => {
+  if (backdrop_path) return IMG_PATH + backdrop_path
+  else if (backdrop_path == null && poster_path == null) return './img/jazz-backup.jpg'
+  else return IMG_PATH + poster_path
+}

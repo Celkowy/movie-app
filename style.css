@@ -8,18 +8,27 @@
   cursor: default;
 }
 
-.icon-color {
-  background-color: gold;
-}
-
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #ffd700;
-
   opacity: 0.9;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+#scrollbar-style::-webkit-scrollbar-track {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#scrollbar-style::-webkit-scrollbar-thumb {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 :root {
@@ -277,7 +286,7 @@ nav.hide {
   position: fixed;
   left: 50%;
   top: 50%;
-  max-height: 95vh;
+  max-height: 90vh;
   transform: translate(-50%, -50%);
   display: none;
   background-color: white;
@@ -332,10 +341,29 @@ body.block {
 }
 
 .overview-text {
+  position: relative;
   display: inline-block;
   font-size: 1.5rem;
-  border-bottom: 2px solid black;
   margin-bottom: 0.5rem;
+}
+
+.overview-text::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transition: width 0.2s 0.4s ease-in;
+}
+
+.movie:hover .overview-text::after {
+  width: 100%;
+}
+
+.show-border {
+  border-bottom: 2px solid black;
 }
 
 a {
@@ -364,13 +392,6 @@ h2.title {
   padding: 0.25rem 0.5rem;
   color: orange;
   border-radius: 5px;
-}
-
-.overview-text {
-  display: inline-block;
-  font-size: 1.5rem;
-  border-bottom: 2px solid black;
-  margin-bottom: 0.5rem;
 }
 
 .more-information {
@@ -603,6 +624,10 @@ ul {
 }
 
 @media (max-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
   .change-display {
     display: block;
   }

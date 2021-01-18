@@ -36,7 +36,7 @@ let i = 1
 let preventFromSearching = 0
 let paginationSwitcher = 0
 let currentActivePage = 1
-let paginationMaxValue = 100
+let paginationMaxValue = 1000
 let paginationMinValue = 1
 let searchText = ''
 
