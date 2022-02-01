@@ -456,6 +456,8 @@ h2.title {
   justify-content: center;
   align-items: center;
   padding: 15px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .second-table-element {
