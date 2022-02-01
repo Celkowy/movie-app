@@ -105,7 +105,9 @@ export const get = function getInfo(extraInfo) {
       ${production_countries
         .map(
           country =>
-            `<li class="align-vertically"><img class="flag" src="https://www.countryflags.io/${country.iso_3166_1}/flat/64.png">${country.name}</li>`
+            `<li class="align-vertically"><img class="flag" src="https://flagcdn.com/h20/${country.iso_3166_1.toLowerCase()}.png">${
+              country.name
+            }</li>`
         )
         .join('')}
       </ul>
