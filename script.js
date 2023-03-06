@@ -141,12 +141,15 @@ async function getMoreInfo(details, popUpInfo) {
 
   popUpInfo.innerHTML = get(extraInfo)
   const back = popUpInfo.querySelector('.back')
-  back.addEventListener('click', () => {
-    popUp.classList.remove('show')
-    popUpInfo.innerHTML = ''
-    doNotClick.classList.remove('active')
-    document.body.classList.remove('block')
-    popUpInfo.remove()
+
+  const removePopup = [back, doNotClick].forEach(el => {
+    el.addEventListener('click', () => {
+      popUp.classList.remove('show')
+      popUpInfo.innerHTML = ''
+      doNotClick.classList.remove('active')
+      document.body.classList.remove('block')
+      popUpInfo.remove()
+    })
   })
 }
 
